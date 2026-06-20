@@ -1,0 +1,53 @@
+.card {
+  width: 350px;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: white;
+  transition: 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50%;
+background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.name {
+  margin-top: 20px;
+  font-size: 28px;
+}
+
+.info {
+  margin: 10px 0;
+  color: #cbd5e1;
+}
+
+.info span {
+  color: #60a5fa;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  color: black;
+ background-color: white;
+}
