@@ -10,7 +10,7 @@ function Container() {
           <Card
             name={student.name}
             course={student.course}
-            rollNumber={student.rollNumber}
+            rollNo={student.rollNumber}
           />
         ))}
       </div>

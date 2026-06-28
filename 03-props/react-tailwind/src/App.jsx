@@ -3,7 +3,6 @@ import students from "../components/students.jsx";
 import { useState } from "react";
 
 function App() {
-
   const [search, setSearch] = useState("");
 
   return (
@@ -20,8 +19,9 @@ function App() {
       >
         <input
           type="search"
+          value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="bg-white border-2 mx-1 w-1/3 rounded-xl"
+          className=" border-2 mx-1 w-1/3 p-4 bg-white rounded-xl "
         />
         <button className="bg-black rounded-xl  text-white w-20">Search</button>
       </div>
@@ -30,7 +30,7 @@ function App() {
 
       <div
         id="container"
-        className="bg-amber-200 items-center border h-100vh grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 gap-4"
+        className=" items-center  h-100vh grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 gap-4"
       >
         {students
           .filter((student) =>
@@ -45,7 +45,7 @@ function App() {
               rollNumber={student.rollNumber}
               attendance={student.attendance}
             />
-          ))}
+          ))} 
       </div>
     </>
   );
