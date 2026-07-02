@@ -1,24 +1,28 @@
 import React from "react";
 import { useState } from "react";
 
-const Forms = () => {
-  // creating one state of object instead of many states
-  const [formData, SetFormData] = useState({
-    name: "",
-    email: "",
-    age: "",
-    department: "",
-    salary: "",
-    joiningDate: "",
-    married: false,
-  });
+const Forms = ({formData, setFormData, setEmployee}) => {
+  // creating one state of object instead of many states ---- putting it in app.jsx as both form.jsx and infoCard.jsx need to access it 
+  // const [formData, SetFormData] = useState({
+  //   name: "",
+  //   email: "",
+  //   age: "",
+  //   department: "",
+  //   salary: "",
+  //   joiningDate: "",
+  //   married: false,
+  // });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setEmployee(formData);
+    console.log(formData)
+  
   };
 
   const handleChange = (e) => {
-    SetFormData({...formData, [e.target.name]: e.target.value });
+    setFormData({...formData, [e.target.name]: e.target.value });
+   
   };
 
 
