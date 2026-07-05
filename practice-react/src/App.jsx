@@ -4,6 +4,10 @@ import Ex01 from '../exercises/Ex01'
 import Ex02 from '../exercises/Ex02'
 import Ex03 from '../exercises/Ex03'
 import Ex04 from '../exercises/Ex04'
+import Ex05 from '../exercises/Ex05'
+
+
+
 const App = () => {
 
   return (
@@ -12,6 +16,7 @@ const App = () => {
       <Ex02 />
       <Ex03 />
       <Ex04 />
+      <Ex05 />
     </>
   )
 }
