@@ -1,20 +1,47 @@
-import React, {useState}from "react";
+import React, { useState } from "react";
 
 const Ex05 = () => {
+  const [input, setInput] = useState("");
+  const [tasks, setTasks] = useState([]);
 
-const [input,setInput]=useState("")
-const [task,setTask]= useState([])
+  const inputChange = (e) => {
+    setInput(e.target.value);
+  };
+console.log(input)
+  const btnClick = () => {if(input.trim(" ")){
+    setTasks([...tasks, input]); //using spread operator to push an item to an array
+    setInput("")
+    console.log(tasks)}
+    };
 
-
-
-const inputChange= (e)=>{
-  setInput(e.target.value)
+    
+ //removing task function
+const remove = (indexToRemove)=>{
+  setTasks((prevs)=>prevs.filter((task,index) => index!==indexToRemove))
 }
 
-const btnClick = ()=>{
-  setTask([...task,input])  //using spread operator to upush an item to an array 
-  console.log(task)
-}
+//if your new state depends on the previous state then use prev as follow :
+// Increment 
+// setCount(prev => prev + 1);
+
+// // Decrement
+// setCount(prev => prev - 1);
+
+// // Toggle
+// setDarkMode(prev => !prev);
+
+// // Add to array
+// setTasks(prev => [...prev, newTask]);
+
+// // Remove from array
+// setTasks(prev => prev.filter(...));
+
+// // Update object
+// setUser(prev => ({
+//   ...prev,
+//   age: prev.age + 1
+// }));
+
   return (
     <>
       <div className="bg-white min-h-screen gap-5 flex flex-col justify-center items-center">
@@ -34,7 +61,7 @@ const btnClick = ()=>{
           </h3>
         </div>
 
-        <div className="w-1/2 border rounded-xl p-4">
+        <div className=" border rounded-xl  p-4">
           <h1 className="text-3xl font-bold text-center ">Todo List</h1>
           <div className="justify-center flex flex-row text-center  border-black rounded-xl p-4 gap-4 ">
             <input
@@ -42,15 +69,35 @@ const btnClick = ()=>{
               placeholder="Add Task"
               className="border rounded-xl px-4 py-2 "
               onChange={inputChange}
+              value={input}
             />
-            <button className="bg-cyan-600 font-bold px-4 py-2 text-white border rounded-xl "
-            onClick={btnClick}>
-            
+            <button
+              className="bg-cyan-600 font-bold px-4 py-2 text-white border rounded-xl "
+              onClick={btnClick}
+            >
               Add Task
             </button>
           </div>
-          <h1 className="text-3xl font-bold text-center ">Task</h1>
-          <p id="task" className="border px-3 py-2 bg-amber-50 rounded-xl  text-xl">{task[0]}</p>
+          
+          <ol>
+            {tasks.map((task, index) => {
+              return (
+                <li
+                  key={index}
+                  className="border px-3 py-2 bg-amber-50 rounded-xl text-xl m-2 flex flex-row justify-between items-center "
+                >
+                  {task}
+                  <button
+                    className="bg-cyan-600  text-white p-2 rounded-2xl"
+                    onClick={() => remove(index)}
+                  >  {/* remove(index) will not be executed immediately as its inside an arrow function ,it means "When the user clicks this button, then call remove(index)."*/}
+                    Remove
+                  </button>
+                </li>
+              );
+            })}
+          
+          </ol>
         </div>
       </div>
     </>
