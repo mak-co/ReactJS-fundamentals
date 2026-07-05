@@ -70,7 +70,7 @@ const Ex03 = () => {
               type="number"
               placeholder="Celcius"
               onChange={changeC}
-              value={setCelcius}
+              value={celcius}
               className="border p-2 rounded-xl"
             />
           </div>
