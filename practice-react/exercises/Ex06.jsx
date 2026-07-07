@@ -1,17 +1,38 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
 const Ex06 = () => {
+  const [students, setStudents] = useState([]);
+  const [input, setInput] = useState("");
 
-const [students,setStudents] = useState({})
-const [input ,setInput] = useState("")
+  const [present, setPresent] = useState(false);
 
+  const [attendance, setAttendance] = useState();
 
-const btnClick =()=>{
-    console.log("btn click")
-}
+  // toggle button
+  const toggle = (index) => {
+    setStudents((prev) =>
+      prev.map((student, i) =>
+        i === index ? { ...student, status: !student.status } : student,
+      ),
+    );
 
+    if (student.status) {
+      setAttendance((prev) => {
+        prev + 1;
+      });
+    }
+  };
 
+  console.log(present);
+  const addStudent = () => {
+    const newStudent = { name: input, status: present };
+    if (input === "") {
+      return;
+    }
 
+    setStudents((prev) => [...prev, newStudent]);
+    setInput("");
+  };
 
   return (
     <>
@@ -32,7 +53,7 @@ const btnClick =()=>{
           </h3>
         </div>
 
-        <div className="border flex  flex-col gap-5 p-2">
+        <div className="flex  flex-col gap-5 w-auto p-2">
           <h1 className="text-2xl font-bold text-center m-3">
             Student Attendance Tracker
           </h1>
@@ -43,27 +64,46 @@ const btnClick =()=>{
               type="text"
               placeholder="Type Name"
               className="border rounded-xl p-3"
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+              value={input}
             />
             <button
               className="bg-cyan-600 px-3 py-2 border rounded-xl text-white"
-              onClick={btnClick}
+              onClick={addStudent}
             >
               Add Student
             </button>
           </div>
 
-          <div className="flex flex-col p-3 border rounded-xl bg-amber-100 text-xl">
-            <h1>Name</h1>
-            <h3>Status : </h3>
-            <div className="flex justify-center items-center">
-              <button className="bg-cyan-600 w-1/3 px-3 py-2 border rounded-xl text-white">
-                Present or Absent
-              </button>
-              <button className="bg-cyan-600 w-1/3 px-3 py-2 border rounded-xl text-white">
-                Remove
-              </button>
+          {students.map((stdnt, index) => (
+            <div
+              className="flex flex-col p-3 border rounded-xl bg-amber-100 text-xl"
+              key={index}
+            >
+              <h1>Name : {stdnt.name}</h1>
+
+              <h2>Status :{stdnt.status ? "Present" : "Absent"}</h2>
+              <div className="flex justify-center">
+                <button
+                  className="bg-cyan-600 rounded-xl font-bold text-white p-3 w-1/2"
+                  onClick={() => {
+                    toggle(index);
+                  }}
+                >
+                  {stdnt.status ? "🔴Mark Absent" : "🟢Mark Present"}
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
+        </div>
+
+        <div className="bg-red-300 p-4 rounded-xl text-2xl">
+          <h1>
+            Students Present = {attendance}
+            {students.length == 0 ? "" : "/" + students.length}
+          </h1>
         </div>
       </div>
     </>
