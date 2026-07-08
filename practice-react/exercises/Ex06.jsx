@@ -4,9 +4,7 @@ const Ex06 = () => {
   const [students, setStudents] = useState([]);
   const [input, setInput] = useState("");
 
-  const [present, setPresent] = useState(false);
-
-  const [attendance, setAttendance] = useState();
+  const [present, setPresent] = useState(true);
 
   // toggle button
   const toggle = (index) => {
@@ -15,23 +13,43 @@ const Ex06 = () => {
         i === index ? { ...student, status: !student.status } : student,
       ),
     );
-
-    if (student.status) {
-      setAttendance((prev) => {
-        prev + 1;
-      });
-    }
   };
 
-  console.log(present);
+  // Don't store state that you can calculate from other state,so instead of creating
+  // a state for it we'll use filter as following
+
+  //filter creates a new array containing only the items that pass the condition.
+  //here ((student)=> student.status) is a condition which will retrun an aray
+  const attendance = students.filter((student) => student.status).length;
+
+  students.map((std) => console.log(std.status));
+  console.log(students);
+
   const addStudent = () => {
     const newStudent = { name: input, status: present };
-    if (input === "") {
+    if (input.trim() === "") {
       return;
     }
 
     setStudents((prev) => [...prev, newStudent]);
     setInput("");
+  };
+  // Removing the student
+  // Initially I thought of writing:
+  // students.filter(student => student != students[index])
+  //
+  // But comparing the whole student object is not the best approach.
+  // Instead, we compare the current index (i) while filter() loops through the array
+  // with the index of the Remove button that was clicked.
+  //
+  // If both indexes are different, keep the student.
+  // If both indexes are the same, remove that student.
+  //
+  // We use setStudents() because filter() only creates a new array;
+  // React won't update the UI until we update the state.
+  // Changing the state tells React to re-render the component with the new students array.
+  const remove = (index) => {
+    setStudents(students.filter((student, i) => i != index));
   };
 
   return (
@@ -85,7 +103,7 @@ const Ex06 = () => {
               <h1>Name : {stdnt.name}</h1>
 
               <h2>Status :{stdnt.status ? "Present" : "Absent"}</h2>
-              <div className="flex justify-center">
+              <div className="flex justify-center gap-3 m-3">
                 <button
                   className="bg-cyan-600 rounded-xl font-bold text-white p-3 w-1/2"
                   onClick={() => {
@@ -93,6 +111,14 @@ const Ex06 = () => {
                   }}
                 >
                   {stdnt.status ? "🔴Mark Absent" : "🟢Mark Present"}
+                </button>
+                <button
+                  className="bg-cyan-600 rounded-xl font-bold text-white p-3 w-1/2"
+                  onClick={() => {
+                    remove(index);
+                  }}
+                >
+                  Remove
                 </button>
               </div>
             </div>
