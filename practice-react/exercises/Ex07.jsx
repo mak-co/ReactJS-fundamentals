@@ -27,7 +27,20 @@ const Ex07 = () => {
 
 
   //create decrease and increase button function
+   //increase funciton
+  const inc = (index)=>{
+    setProducts((prev)=>prev.map((item,i)=>i===index ? {...item,pquant:item.pquant+1}:item))
+  }
 
+// decrase function
+ 
+  const dec = (index)=>{
+    //using nested ternary for not decrement below zero
+    setProducts((prev)=>prev.map((item,i)=>i===index ? {...item,pquant:item.pquant>0?item.pquant-1:0}:item))
+  }
+
+
+  console.log(products)
   return (
     <>
       <div className="bg-white min-h-screen gap-5 flex flex-col justify-center items-center">
@@ -92,39 +105,45 @@ const Ex07 = () => {
           {/* Card */}
 
           {products.map((prod, index) => (
-            
-              <div
-                className="border rounded-xl bg-black p-4 minhsc
+            //note- Each child in a list should have a unique "key" prop.
+            <div
+              className="border rounded-xl bg-black p-4 minhsc
             flex flex-col gap-2 "
-              >
-                <h1 className="text-2xl font-bold text-center text-white">
-                  Product Name - {prod.pname}
-                </h1>
-                <h1 className="text-2xl font-bold text-center text-white">
-                  Quantity - {prod.pquant}
-                </h1>
+            key={index}
+            >
+              <h1 className="text-2xl font-bold text-center text-white">
+                Product Name - {prod.pname}
+              </h1>
+              <h1 className="text-2xl font-bold text-center text-white">
+                Quantity - {prod.pquant}
+              </h1>
 
-                <div className="flex flex-row gap-4 m-2">
-                  <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2  hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75">
-                    + Increase
-                  </button>
-                  <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75">
-                    - Decrease
-                  </button>
-                </div>
-
-                {/* button div */}
-                <div className="flex flex-row gap-4 m-2">
-                  <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75">
-                    Edit
-                  </button>
-                  <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
-                  onClick={()=>deleteObj(index)}>
-                    Delete
-                  </button>
-                </div>
+              <div className="flex flex-row gap-4 m-2">
+                <button
+                  className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2  hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
+                  onClick={() => inc(index)}
+                >
+                  + Increase
+                </button>
+                <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
+                onClick={()=>dec(index)}>
+                  - Decrease
+                </button>
               </div>
 
+              {/* button div */}
+              <div className="flex flex-row gap-4 m-2">
+                <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75">
+                  Edit
+                </button>
+                <button
+                  className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
+                  onClick={() => deleteObj(index)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           ))}
 
           {/* Statistics Section */}
