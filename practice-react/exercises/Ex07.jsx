@@ -5,42 +5,80 @@ const Ex07 = () => {
 
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(""); //e.target.value always gives string even if it is a number
-
-
-//create function for addproduct button 
+  
+  const [editingIndex, setEditingIndex] = useState(null);
+  console.log(editingIndex)
+  //create function for addproduct button
   //can't use return in ternary operator therefore using the if else
-  const addProduct = () => {if(name.trim() ==="" || quantity.trim() ==="" ) {
-    return
-  }else{
-    setProducts((prev) => [...prev, { pname: name, pquant: Number(quantity)}])}
-    setName("")
-    setQuantity("")
-  }
-    
-//create function for delete button 
+  const addProduct = () => {
+    console.log("addproduct running")
+    if (name.trim() === "" || quantity.trim() === "") {
+      return;
+    } else {
+      setProducts((prev) => [
+        ...prev,
+        { pname: name, pquant: Number(quantity) },
+      ]);
+    }
+    setName("");
+    setQuantity("");
+    setEditingIndex(null);
+  };
+
+  //create update product funciton
+  //to use if statement after an arrow function use { if statement}
+  // and If you use curly braces, you lose the automatic return.
+  const updateProd = () => {
+    setProducts((prev) =>
+      prev.map((item, index) => {
+        if (index === editingIndex) {
+          return { pname: name, pquant: Number(quantity) };
+        } else {
+          return item;
+        }
+      }),
+    );
+  };
+
+  //create function for delete button
   //to remove best way/appraoch is to filter
-     //first parameter (_) is the element value, which we ignore
-  const deleteObj =(index)=>{
-    setProducts((prev)=>prev.filter((_,i)=>i!==index))
-  }
-
-
+  //first parameter (_) is the element value, which we ignore
+  const deleteObj = (index) => {
+    setProducts((prev) => prev.filter((_, i) => i !== index));
+  };
 
   //create decrease and increase button function
-   //increase funciton
-  const inc = (index)=>{
-    setProducts((prev)=>prev.map((item,i)=>i===index ? {...item,pquant:item.pquant+1}:item))
-  }
+  //increase funciton
+  const inc = (index) => {
+    setProducts((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, pquant: item.pquant + 1 } : item,
+      ),
+    );
+  };
 
-// decrase function
- 
-  const dec = (index)=>{
+  // decrase function
+
+  const dec = (index) => {
     //using nested ternary for not decrement below zero
-    setProducts((prev)=>prev.map((item,i)=>i===index ? {...item,pquant:item.pquant>0?item.pquant-1:0}:item))
-  }
+    setProducts((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? { ...item, pquant: item.pquant > 0 ? item.pquant - 1 : 0 }
+          : item,
+      ),
+    );
+  };
 
+  // Edit function
 
-  console.log(products)
+  const edit = (index) => {
+    setEditingIndex(index);
+    setName(products[index].pname);
+    setQuantity(products[index].pquant.toString());
+  };
+
+  console.log(products);
   return (
     <>
       <div className="bg-white min-h-screen gap-5 flex flex-col justify-center items-center">
@@ -95,9 +133,11 @@ const Ex07 = () => {
             <div className="flex justify-center">
               <button
                 className="bg-cyan-600  hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-100 text-xl px-2 py-1 text-white rounded-xl w-1/2"
-                onClick={addProduct}
+                onClick={ //dont use ()=> or arrow funciton just pass this dirctly
+                  editingIndex === null ? addProduct: updateProd
+                }
               >
-                Add Product
+                {editingIndex === null ? "Add Product" : "Update Product"}
               </button>
             </div>
           </div>
@@ -109,7 +149,7 @@ const Ex07 = () => {
             <div
               className="border rounded-xl bg-black p-4 minhsc
             flex flex-col gap-2 "
-            key={index}
+              key={index}
             >
               <h1 className="text-2xl font-bold text-center text-white">
                 Product Name - {prod.pname}
@@ -125,15 +165,22 @@ const Ex07 = () => {
                 >
                   + Increase
                 </button>
-                <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
-                onClick={()=>dec(index)}>
+                <button
+                  className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
+                  onClick={() => dec(index)}
+                >
                   - Decrease
                 </button>
               </div>
 
               {/* button div */}
               <div className="flex flex-row gap-4 m-2">
-                <button className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75">
+                <button
+                  className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
+                  onClick={() => {
+                    edit(index);
+                  }}
+                >
                   Edit
                 </button>
                 <button
