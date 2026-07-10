@@ -7,7 +7,7 @@ const Ex07 = () => {
   const [quantity, setQuantity] = useState(""); //e.target.value always gives string even if it is a number
   
   const [editingIndex, setEditingIndex] = useState(null);
-  console.log(editingIndex)
+
   //create function for addproduct button
   //can't use return in ternary operator therefore using the if else
   const addProduct = () => {
@@ -37,7 +37,10 @@ const Ex07 = () => {
           return item;
         }
       }),
-    );
+    )
+    setName("");
+    setQuantity("");
+    setEditingIndex(null);
   };
 
   //create function for delete button
@@ -78,7 +81,17 @@ const Ex07 = () => {
     setQuantity(products[index].pquant.toString());
   };
 
-  console.log(products);
+//out of stock const
+//if you use curly braces in arrow funciton then you need to return the value 
+const outofStock = products.reduce((count, quantityValue) => {
+  if (quantityValue.pquant === 0) {
+    return count + 1;
+  } else {
+    return count
+  }
+}, 0);
+
+console.log(outofStock)
   return (
     <>
       <div className="bg-white min-h-screen gap-5 flex flex-col justify-center items-center">
@@ -133,8 +146,9 @@ const Ex07 = () => {
             <div className="flex justify-center">
               <button
                 className="bg-cyan-600  hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-100 text-xl px-2 py-1 text-white rounded-xl w-1/2"
-                onClick={ //dont use ()=> or arrow funciton just pass this dirctly
-                  editingIndex === null ? addProduct: updateProd
+                onClick={
+                  //dont use ()=> or arrow funciton just pass this dirctly
+                  editingIndex === null ? addProduct : updateProd
                 }
               >
                 {editingIndex === null ? "Add Product" : "Update Product"}
@@ -202,9 +216,21 @@ const Ex07 = () => {
               Inventory Statistics
             </h1>
 
-            <h1 className="text-xl font-bold ">Total Products : </h1>
-            <h1 className="text-xl font-bold ">Total Stock : </h1>
-            <h1 className="text-xl font-bold ">Out of Stock :</h1>
+            <h1 className="text-xl font-bold ">
+              Total Products : {products.length}{" "}
+            </h1>
+            {/* only arrays have a .reduce() method  & 0 is the initial value of the accumulator (here total)*/}
+            <h1 className="text-xl font-bold ">
+              Total Stock :{" "}
+              {products.reduce((total, product) => {
+                return total + product.pquant;
+              }, 0)}{" "}
+            </h1>
+
+            {/* Never call setState while rendering */}
+            <h1 className="text-xl font-bold ">
+              Out of Stock :{outofStock}
+            </h1>
           </div>
         </div>
 
