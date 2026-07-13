@@ -198,7 +198,7 @@ console.log(outofStock)
                   Edit
                 </button>
                 <button
-                  className="bg-cyan-600 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
+                  className="bg-red-500 text-xl px-2 py-1 text-white rounded-xl w-1/2 hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all duration-75"
                   onClick={() => deleteObj(index)}
                 >
                   Delete
