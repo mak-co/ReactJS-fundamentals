@@ -8,7 +8,7 @@ import Ex05 from '../exercises/Ex05'
 import Ex06 from '../exercises/Ex06'
 import Ex07 from '../exercises/Ex07'
 import Ex08 from '../exercises/Ex08'
-
+import Ex09 from '../exercises/Ex09'
 
 const App = () => {
 
@@ -22,6 +22,7 @@ const App = () => {
       <Ex06 />
       <Ex07 />
       <Ex08 />
+      <Ex09 />
     </>
   )
 }
