@@ -17,14 +17,11 @@ const Ex08 = () => {
     setLoading(true);
     try {
       const response = await fetch(`https://api.github.com/users/${name}`);
-      console.log(response)
-      console.log(response.ok)
-      console.log(response.status)
+  
       if (!response.ok) {
         throw new Error("User Not Found");
       }
       const data = await response.json();
-      console.log(data)
       setUserData(data);
     } catch (err) {
       setError(err.message);
@@ -33,7 +30,7 @@ const Ex08 = () => {
     }
     setName("")
   };
-
+console.log(error)
   return (
     <>
       <div className="bg-gray-300 min-h-screen gap-5 flex flex-col justify-center items-center">
