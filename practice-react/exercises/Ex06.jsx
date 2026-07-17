@@ -23,7 +23,6 @@ const Ex06 = () => {
   const attendance = students.filter((student) => student.status).length;
 
   students.map((std) => console.log(std.status));
-  console.log(students);
 
   const addStudent = () => {
     const newStudent = { name: input, status: present };

@@ -9,6 +9,7 @@ import Ex06 from '../exercises/Ex06'
 import Ex07 from '../exercises/Ex07'
 import Ex08 from '../exercises/Ex08'
 import Ex09 from '../exercises/Ex09'
+import Ex10 from '../exercises/Ex10'
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
       <Ex07 />
       <Ex08 />
       <Ex09 />
+      <Ex10 />
     </>
   )
 }

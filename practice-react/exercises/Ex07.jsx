@@ -91,7 +91,6 @@ const outofStock = products.reduce((count, quantityValue) => {
   }
 }, 0);
 
-console.log(outofStock)
   return (
     <>
       <div className="bg-white min-h-screen gap-5 flex flex-col justify-center items-center">
@@ -107,7 +106,7 @@ console.log(outofStock)
         <div className="flex flex-col gap-5 ">
           {/* Inpput Box */}
           <div
-            className="border rounded-xl bg-amber-100 p-4 minhsc
+            className="border rounded-xl bg-amber-50 p-4 minhsc
             flex flex-col gap-2"
           >
             <h1 className="text-2xl text-center font-bold m-3 ">
@@ -209,7 +208,7 @@ console.log(outofStock)
 
           {/* Statistics Section */}
           <div
-            className="border rounded-xl bg-amber-100 p-4 minhsc
+            className="border rounded-xl bg-amber-50 p-4 minhsc
             flex flex-col gap-2"
           >
             <h1 className="text-2xl font-bold text-center">
