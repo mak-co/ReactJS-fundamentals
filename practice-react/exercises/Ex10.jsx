@@ -1,49 +1,60 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
 const Ex10 = () => {
-const [pokeName,setPokeName]= useState("")
-const [pokeData,setPokeData]=useState(null)
-const [pokemon,setPokemon]=useState([])
+  const [pokeName, setPokeName] = useState("");
+  const [pokeData, setPokeData] = useState(null);
+  const [pokemon, setPokemon] = useState([]);
 
+  const search = async () => {
+    //fetchign random pokemons on every refresh using math.random and offset in api
+    const randomOffset = Math.floor(Math.random()*980)  //*980 becouse it gives in decimal ex: 0.000
+     
 
-  const search=async ()=>{
+    //fetching the api
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${randomOffset}&limit=20`);
+
+    const responsePoke = await response.json();
+
+    const resultPokeaArr = responsePoke.results;
+
+    const urls = resultPokeaArr.map((item) => item.url);
+
+    const fetchPromises = urls.map(async (item) => {
+      const responseUrl = await fetch(item);
+
+      const responseUrlJson = await responseUrl.json();
+
+      return responseUrlJson
+    });
+    const allpromises = await Promise.all(fetchPromises);
+    
+    setPokemon(allpromises);
+  };
+
+  const searchBtn = async () => {
     const response = await fetch(
-      "https://pokeapi.co/api/v2/pokemon/",
+      `https://pokeapi.co/api/v2/pokemon/${pokeName.toLowerCase()}`,
     );
-    console.log(response)
 
-    const responsePoke = await response.json()
-    console.log(responsePoke.results);
-    
-    const resultPokeaArr = responsePoke.results
-    
-    const urls = resultPokeaArr.map((item) => item.url);    
-    
-    console.log(urls)
-    urls.map(async(item,index)=>{
-     const responseUrl= await fetch(item)
-    
-     const responseUrlJson =await responseUrl.json()
-     setPokemon(prev=>[...prev,responseUrlJson])
-     console.log(responseUrlJson)
-    })
-  }
+    const data = await response.json();
+
+    setPokemon([data]);
+  };
+  console.log(pokeName)
 
 
-// so whenever the app reloads search will run as dependency is []
-useEffect(() => {
-  search();
-}, []);
+
+  // so whenever the app reloads search will run as dependency is []
+  useEffect(() => {
+    search();
+  }, []);
   return (
     <>
       <div className="bg-gray-200 min-h-screen gap-5 flex flex-col justify-center items-center">
         {/* Heading */}
         <div className="bg-black text-white px-4 py-4 rounded-xl mt-3  text-center">
           <h1 className="text-2xl font-bold">Ex-10:Pokemon Search App</h1>
-          <h3 className="">
-            Goal -To revise Controlled input, API fetch, Async/Await, Loading,
-            Error, Conditional rendering, Rendering API response
-          </h3>
+          <h3 className="">Goal -To learn useEffect, Promise.all(),Randomising offset for api, dynamic query parameter(?), </h3>
         </div>
 
         <div className="w-full flex flex-col justify-center items-center ">
@@ -55,20 +66,20 @@ useEffect(() => {
             />
             <button
               className="bg-cyan-600 px-3 py-2 rounded-xl text-white text-xl "
-              onClick={search}
+              onClick={searchBtn}
             >
               Search
             </button>
           </div>
 
           {/* card grid*/}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 p-5 items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 p-5 min-w-screen align- items-center">
             {/* card */}
 
             {pokemon.map((item) => (
               <div
                 key={item.id}
-                className="bg-zinc-900 border  rounded-xl p-5 flex flex-col items-center shadow-xl hover:scale-105  transition-all duration-300"
+                className="bg-zinc-900 border  rounded-xl p-5 flex flex-col items-center shadow-xl hover:scale-105 justify-center transition-all duration-300"
               >
                 <img
                   className="w-40 h-40 object-contain"
@@ -117,6 +128,6 @@ useEffect(() => {
       </div>
     </>
   );
-}
+};
 
-export default Ex10
+export default Ex10;
